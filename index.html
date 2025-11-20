@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Bicho Training</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="app">
+    <header class="app-header">
+      <div>
+        <h1>Bicho Training</h1>
+        <p class="subtitle">Entrena desde cero, paso a paso 💜</p>
+      </div>
+      <span id="today-label" class="today-label"></span>
+    </header>
+
+    <nav class="tabs">
+      <button class="tab-button active" data-tab="home">Inicio</button>
+      <button class="tab-button" data-tab="run">Running</button>
+      <button class="tab-button" data-tab="strength">Fuerza</button>
+      <button class="tab-button" data-tab="progress">Progreso</button>
+      <button class="tab-button" data-tab="story">Motivación</button>
+      <button class="tab-button" data-tab="profile">Perfil</button>
+    </nav>
+
+    <main class="tab-content">
+
+      <!-- INICIO -->
+      <section id="tab-home" class="tab-panel active">
+        <h2>Bienvenido/a 👋</h2>
+        <p id="daily-plan-text">
+          Esta app es para personas que empiezan desde cero en running y fuerza.
+          Aquí no hay presión, solo pasos pequeños y constantes 💪.
+        </p>
+
+        <div class="quote-box">
+          <strong>Frase de hoy:</strong>
+          <p id="daily-quote">Vamos a por un día mejor que ayer.</p>
+        </div>
+
+        <div class="quick-actions">
+          <button data-tab-target="run">Empezar con Running 🏃‍♂️</button>
+          <button data-tab-target="strength">Empezar con Fuerza 🏋️‍♂️</button>
+        </div>
+      </section>
+
+      <!-- RUNNING -->
+      <section id="tab-run" class="tab-panel">
+        <h2>Running desde cero 🏃‍♂️</h2>
+        <p class="help-text">
+          Aquí armamos un plan sencillo para ti. Sin palabras raras, solo instrucciones claras.
+        </p>
+
+        <!-- GENERADOR DE PLAN BÁSICO / INTERMEDIO / FUERTE RUNNING -->
+        <form id="run-plan-form" class="form-card">
+          <h3>Plan por distancia 🎯</h3>
+          <label>
+            Distancia objetivo
+            <select id="run-plan-distance" required>
+              <option value="5">5K</option>
+              <option value="8">8K</option>
+              <option value="10">10K</option>
+              <option value="15">15K</option>
+              <option value="21">21K</option>
+            </select>
+          </label>
+          <label>
+            Nivel del plan
+            <select id="run-plan-level" required>
+              <option value="basico">Básico (empezando de cero)</option>
+              <option value="intermedio">Intermedio (ya te mueves algo)</option>
+              <option value="fuerte">Fuerte (te gusta exigirte)</option>
+            </select>
+          </label>
+          <label>
+            Edad
+            <input type="number" id="run-plan-age" min="12" max="80" placeholder="Ej: 35" />
+          </label>
+          <label>
+            Sexo
+            <select id="run-plan-sex">
+              <option value="">Prefiero no decir</option>
+              <option value="hombre">Hombre</option>
+              <option value="mujer">Mujer</option>
+              <option value="otro">Otro</option>
+            </select>
+          </label>
+          <label>
+            Experiencia
+            <select id="run-plan-experience" required>
+              <option value="nada">Nunca he entrenado</option>
+              <option value="poco">He hecho algo pero muy poco</option>
+              <option value="algunos-meses">Entreno de vez en cuando</option>
+            </select>
+          </label>
+          <label>
+            ¿Cuántos días a la semana puedes entrenar?
+            <input type="number" id="run-plan-days" min="2" max="6" placeholder="Ej: 3" required />
+          </label>
+          <button type="submit">Crear plan 📝</button>
+        </form>
+
+        <div id="run-plan-result" class="plan-box">
+          <p class="plan-placeholder">
+            Aquí aparecerá tu plan de running según la distancia, tu nivel y tus días disponibles 😊.
+          </p>
+        </div>
+
+        <h3>Registrar tu entreno de hoy 🏃‍♂️</h3>
+        <form id="run-form" class="form-card">
+          <label>
+            Distancia (km)
+            <input type="number" step="0.01" id="run-distance" required />
+          </label>
+          <label>
+            Tiempo (minutos)
+            <input type="number" step="0.1" id="run-time" required />
+          </label>
+          <label>
+            ¿Cómo te sentiste?
+            <select id="run-feel">
+              <option value="fresco">Muy bien 😄</option>
+              <option value="normal">Normal 🙂</option>
+              <option value="cansado">Cansado 😓</option>
+            </select>
+          </label>
+          <label>
+            Notas (opcional)
+            <textarea id="run-notes" rows="2" placeholder="Ej: Caminé y corrí por bloques, primera vez."></textarea>
+          </label>
+          <label>
+            Foto del entreno (opcional)
+            <input type="file" id="run-photo" accept="image/*" />
+          </label>
+          <button type="submit">Guardar entreno ✅</button>
+        </form>
+
+        <h3>Historial de running</h3>
+        <ul id="run-history" class="history-list"></ul>
+      </section>
+
+      <!-- FUERZA -->
+      <section id="tab-strength" class="tab-panel">
+        <h2>Fuerza para principiantes 💪</h2>
+        <p class="help-text">
+          Rutinas simples. Puedes hacerlas con tu cuerpo, mancuernas o botellas con agua.
+        </p>
+
+        <!-- GENERADOR DE PLAN BÁSICO / INTERMEDIO / FUERTE FUERZA -->
+        <form id="strength-plan-form" class="form-card">
+          <h3>Plan de fuerza 🧱</h3>
+          <label>
+            Nivel actual
+            <select id="strength-plan-level" required>
+              <option value="nada">Nunca he entrenado fuerza</option>
+              <option value="poco">He hecho algo pero sin constancia</option>
+              <option value="algunos-meses">Tengo algo de experiencia</option>
+            </select>
+          </label>
+          <label>
+            Intensidad del plan
+            <select id="strength-plan-intensity" required>
+              <option value="basico">Básico (suave)</option>
+              <option value="intermedio">Intermedio (un poco más caña)</option>
+              <option value="fuerte">Fuerte (bastante duro)</option>
+            </select>
+          </label>
+          <label>
+            ¿Cuántos días a la semana puedes hacer fuerza?
+            <input type="number" id="strength-plan-days" min="2" max="5" placeholder="Ej: 2" required />
+          </label>
+          <label>
+            Objetivo principal
+            <input type="text" id="strength-plan-goal" placeholder="Ej: Tonificar, ganar fuerza, mejorar postura" />
+          </label>
+          <button type="submit">Crear plan 💪</button>
+        </form>
+
+        <div id="strength-plan-result" class="plan-box">
+          <p class="plan-placeholder">
+            Aquí verás una propuesta de rutina de fuerza adaptada a tu nivel 😊.
+          </p>
+        </div>
+
+        <h3>Registrar tu entreno de fuerza 💪</h3>
+        <form id="strength-form" class="form-card">
+          <label>
+            Rutina / zona
+            <input type="text" id="strength-area" placeholder="Piernas, core, cuerpo completo..." required />
+          </label>
+          <label>
+            Series x repeticiones
+            <input type="text" id="strength-sets" placeholder="Ej: 3 series de 10 repeticiones" required />
+          </label>
+          <label>
+            Peso (opcional, kg)
+            <input type="number" step="0.5" id="strength-weight" />
+          </label>
+          <label>
+            Foto del entreno (opcional)
+            <input type="file" id="strength-photo" accept="image/*" />
+          </label>
+          <label>
+            Notas
+            <textarea id="strength-notes" rows="2" placeholder="Ejercicios, pausas, sensaciones..."></textarea>
+          </label>
+          <button type="submit">Guardar entreno ✅</button>
+        </form>
+
+        <h3>Historial de fuerza</h3>
+        <ul id="strength-history" class="history-list"></ul>
+      </section>
+
+      <!-- PROGRESO -->
+      <section id="tab-progress" class="tab-panel">
+        <h2>Tu progreso 📊</h2>
+
+        <div class="stats-grid">
+          <div class="stat-card">
+            <span class="stat-label">Km totales</span>
+            <span id="stat-total-km" class="stat-value">0</span>
+          </div>
+          <div class="stat-card">
+            <span class="stat-label">Entrenos de running</span>
+            <span id="stat-runs" class="stat-value">0</span>
+          </div>
+          <div class="stat-card">
+            <span class="stat-label">Entrenos de fuerza</span>
+            <span id="stat-strengths" class="stat-value">0</span>
+          </div>
+          <div class="stat-card">
+            <span class="stat-label">Ritmo medio (min/km)</span>
+            <span id="stat-avg-pace" class="stat-value">–</span>
+          </div>
+        </div>
+
+        <button id="clear-data" class="danger-button">
+          Borrar todos los datos y empezar de cero 🔁
+        </button>
+
+        <h3>Retos por distancia 🎖️</h3>
+        <ul class="badge-list">
+          <li>5K <span id="badge-5" class="badge locked">🔒</span></li>
+          <li>8K <span id="badge-8" class="badge locked">🔒</span></li>
+          <li>10K <span id="badge-10" class="badge locked">🔒</span></li>
+          <li>15K <span id="badge-15" class="badge locked">🔒</span></li>
+          <li>21K <span id="badge-21" class="badge locked">🔒</span></li>
+        </ul>
+
+        <h3>Rachas de constancia 🔥</h3>
+        <ul class="badge-list">
+          <li>1 semana entrenando seguido <span id="streak-week" class="badge locked">🔒</span></li>
+          <li>1 mes sumando entrenos <span id="streak-month" class="badge locked">🔒</span></li>
+          <li>6 meses en el juego <span id="streak-6m" class="badge locked">🔒</span></li>
+          <li>1 año firme <span id="streak-year" class="badge locked">🔒</span></li>
+        </ul>
+
+        <h3>Logros de fuerza 💪</h3>
+        <ul class="badge-list">
+          <li>10 entrenos de fuerza registrados <span id="strength-10" class="badge locked">🔒</span></li>
+          <li>Piernas de acero (4 entrenos de piernas) <span id="strength-legs" class="badge locked">🔒</span></li>
+          <li>Espalda fuerte (4 entrenos de espalda) <span id="strength-back" class="badge locked">🔒</span></li>
+        </ul>
+
+        <h3>Otros premios 🎁</h3>
+        <ul class="badge-list">
+          <li>Has compartido la app con alguien <span id="award-share" class="badge locked">🔒</span></li>
+          <li>Subiste tu primera foto de progreso <span id="award-photo" class="badge locked">🔒</span></li>
+          <li>50 entrenos en total (running + fuerza) <span id="award-50" class="badge locked">🔒</span></li>
+        </ul>
+
+        <button id="mark-shared" class="secondary-button">
+          He compartido la app 📣
+        </button>
+
+        <h3>Últimos entrenos</h3>
+        <ul id="recent-workouts" class="history-list"></ul>
+      </section>
+
+      <!-- MOTIVACIÓN / HISTORIA -->
+      <section id="tab-story" class="tab-panel">
+        <h2>Mi historia 🧡</h2>
+
+        <div class="story-layout">
+          <div class="story-text">
+            <div class="story-card">
+              <p>
+                Bicho Training nace de alguien normal, como tú. Empecé desde cero, sin ser
+                deportista profesional, solo con ganas de cambiar mi vida poco a poco.
+              </p>
+              <p>
+                Con constancia fui mejorando y hoy tengo marcas como:
+              </p>
+              <ul class="motivation-list">
+                <li>1K en <strong>4:11</strong> ⏱️</li>
+                <li>5K en <strong>21:38</strong> 🏃‍♂️</li>
+                <li>10K en <strong>47:58</strong> 🏁</li>
+                <li>21K en <strong>1:51:16</strong> 🥇</li>
+              </ul>
+              <p>
+                Estos no son tiempos de profesional, son tiempos básicos logrados con
+                trabajo constante. Si yo pude, tú también puedes. No se trata de ser el más
+                rápido, se trata de no rendirte.
+              </p>
+              <p>
+                Entreno running y fuerza, igual que lo harás aquí: días fáciles, días un poco
+                más duros y muchos días normales donde simplemente cumples con lo que toca.
+              </p>
+            </div>
+
+            <h3>Frases para recordar 💬</h3>
+            <ul class="motivation-list">
+              <li>“No tienes que hacerlo perfecto, solo tienes que hacerlo.”</li>
+              <li>“Caminar también cuenta. Todo suma.”</li>
+              <li>“Un entrenamiento suave sigue siendo mejor que ninguno.”</li>
+              <li>“No compites contra nadie, solo contra la persona que eras ayer.”</li>
+              <li>“Aunque vayas despacio, sigues yendo hacia adelante.”</li>
+            </ul>
+
+            <p class="motivation-footer">
+              Si estás empezando, quédate con esto:
+              <strong>no estás tarde</strong> y lo que haces
+              <strong>no es poco</strong>. Vamos juntos, paso a paso 🏃‍♂️💪.
+            </p>
+          </div>
+
+          <div class="story-photo-box">
+            <img src="img/bicho-running.jpg" class="story-photo" alt="Entrenando running">
+            <img src="img/bicho-gym.jpg" class="story-photo" alt="Entrenando fuerza">
+          </div>
+        </div>
+      </section>
+
+      <!-- PERFIL -->
+      <section id="tab-profile" class="tab-panel">
+        <h2>Perfil 👤</h2>
+        <form id="profile-form" class="form-card">
+          <label>
+            Nombre
+            <input type="text" id="profile-name" placeholder="Tu nombre" />
+          </label>
+          <label>
+            Meta principal
+            <input type="text" id="profile-goal" placeholder="Ej: correr 5K, sentirme mejor, ganar fuerza" />
+          </label>
+          <label>
+            Días de entreno por semana
+            <input type="number" id="profile-days" min="1" max="7" />
+          </label>
+          <label>
+            Foto de perfil (opcional)
+            <input type="file" id="profile-photo" accept="image/*" />
+          </label>
+          <button type="submit">Guardar perfil ✅</button>
+        </form>
+
+        <div class="profile-summary">
+          <h3>Resumen</h3>
+          <p id="profile-summary-text">
+            Configura tu meta y tus días de entreno para que Bicho Training se adapte a ti.
+          </p>
+          <div id="profile-photo-box" class="profile-photo-box hidden">
+            <img id="profile-photo-preview" class="profile-photo" alt="Foto de perfil">
+          </div>
+        </div>
+      </section>
+
+    </main>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
